@@ -1,45 +1,71 @@
-#include<iostream>
+#include <iostream>
 
-int main(int argc, char* argv[]) {
-	int a = 0;
-	std::cin >> a;
-	while (a != 0) {
-		if (a - 100 >= 0) {
-			std::cout << "C";
-			a -= 100;
-		}
-		if (a - 90 >= 0) {
-			std::cout << "XC";
-			a -= 90;
-		}
-		if (a - 50 >= 0) {
-			std::cout << "L";
-			a -= 50;
-		}
-		if (a - 40 >= 0) {
-			std::cout << "XL";
-			a -= 40;
-		}
-		if (a - 10 >= 0) {
-			std::cout << "X";
-			a -= 10;
-		}
-		if (a - 9 >= 0) {
-			std::cout << "IX";
-			a -= 9;
-		}
-		if (a - 5 >= 0) {
-			std::cout << "V";
-			a -= 5;
-		}
-		if (a - 4 >= 0) {
-			std::cout << "IV";
-			a -= 4;
-		}
-		if (a - 1 >= 0) {
-			std::cout << "I";
-			a -= 1;
-		}
+int main(int argc, char* argv) {
+	int n = 0;
+	std::cin >> n;
+	int d = n / 10;
+	int e = n % 10;
+	switch (d) {
+	case 1:
+		std::cout << "X";
+		break;
+	case 2:
+		std::cout << "XX";
+		break;
+	case 3:
+		std::cout << "XXX";
+		break;
+	case 4:
+		std::cout << "XL";
+		break;
+	case 5:
+		std::cout << "L";
+		break;
+	case 6:
+		std::cout << "LX";
+		break;
+	case 7:
+		std::cout << "LXX";
+		break;
+	case 8:
+		std::cout << "LXXX";
+		break;
+	case 9:
+		std::cout << "LC";
+		break;
+	case 10:
+		std::cout << "C";
+		break;
+	}
+
+	switch (e) {
+	case 1:
+		std::cout << "I" << std::endl;
+		break;
+	case 2:
+		std::cout << "II" << std::endl;
+		break;
+	case 3:
+		std::cout << "III" << std::endl;
+		break;
+	case 4:
+		std::cout << "IV" << std::endl;
+		break;
+	case 5:
+		std::cout << "V" << std::endl;
+		break;
+	case 6:
+		std::cout << "VI" << std::endl;
+		break;
+	case 7:
+		std::cout << "VII" << std::endl;
+		break;
+	case 8:
+		std::cout << "VIII";
+		break;
+	case 9:
+		std::cout << "IX";
+		break;
 	}
 	return EXIT_SUCCESS;
 }
