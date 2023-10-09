@@ -5,8 +5,8 @@ int main()
 {
 	int n = 0;
 	std::cin >> n;
-	int* a = (int*) malloc(sizeof(int) * n);
-	
+	int* a = (int*)malloc(sizeof(int) * n);
+
 	for (int i = 0; i < n; ++i)
 	{
 		std::cin >> *(a + i);

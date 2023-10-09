@@ -11,11 +11,6 @@ int main()
 	{
 		std::cin >> *(a + i);
 	}
-	for (int i = 0; i < n; ++i)
-	{
-		std::cout << *(a + i) << " ";
-	}
-	std::cout << std::endl;
 	int max = 0;
 	int min = *a;
 	int maxi = 0;

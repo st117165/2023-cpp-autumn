@@ -29,11 +29,6 @@ int main()
 			++k;
 		}
 	}
-	for (int i = 0; i < n; ++i)
-	{
-		std::cout << *(a + i) << " ";
-	}
-	std::cout << std::endl;
 	for (int i = 0; i < k; ++i)
 	{
 		std::cout << *(b + i) << " ";
