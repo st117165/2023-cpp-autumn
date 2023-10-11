@@ -1,7 +1,7 @@
 #include<iostream>
 #include<cstdlib>
 
-int main()
+int main(int argc, char* argv[])
 {
 	int n = 0;
 	std::cin >> n;
