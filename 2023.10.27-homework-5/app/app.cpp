@@ -51,7 +51,7 @@ void addelement(int*& a, int& l)
 	expandarray(a, l, 1);
 	int n = 0;
 	std::cin >> n;
-	a[l-1] = n;
+	a[l - 1] = n;
 }
 void deleteelement(int*& a, int& l)
 {
@@ -222,7 +222,7 @@ void deletedublicates(int*& a, int& l)
 {
 	if (a != nullptr)
 	{
-		int* c = new int[l] {0};
+		int* c = new int[l] { 0 };
 		for (int i = 0; i < l - 1; i++)
 		{
 			for (int j = i + 1; j < l; j++)

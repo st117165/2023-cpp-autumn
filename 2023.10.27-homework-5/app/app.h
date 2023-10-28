@@ -2,6 +2,7 @@
 #include<iostream>
 #include<cstdlib>
 #include<ctime>
+
 void menu();
 void expandarray(int*& a, int& l, int n);
 void displayarray(int*& a, int l);

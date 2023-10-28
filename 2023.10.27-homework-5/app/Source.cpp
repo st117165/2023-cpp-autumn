@@ -1,4 +1,3 @@
-
 #include<iostream>
 #include<cstdlib>
 #include<ctime>
@@ -6,7 +5,6 @@
 
 int main(int argc, char* argv[])
 {
-	
 	bool exit = true;
 	int* array = nullptr;
 	int l = 0;
