@@ -1,0 +1,12 @@
+#pragma twice
+#ifndef l2
+#ifdef l1
+#define l2
+#endif
+#ifndef l1
+#define l1
+#endif
+
+void f();
+
+#endif
