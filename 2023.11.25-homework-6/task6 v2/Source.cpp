@@ -6,7 +6,6 @@ int main(int argc, char* argv[])
 {
     int n = 0;
     std::cin >> n;
-
     recursion(n, 1, 3);
 
     return EXIT_SUCCESS;
