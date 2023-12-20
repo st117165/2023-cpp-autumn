@@ -89,17 +89,12 @@ bool isPalindrom(std::string str)
 
 int main(int argc, char* argv[])
 {
-	int n = countWord("in.txt");;
+	int n = countWord("in.txt.txt");;
 	std::string* WordArr = new std::string[n];
 
-	wordArray("in.txt", WordArr);
-	if (isPalindrom(WordArr[0]))
-	{
-		std::cout << "palindrom" << std::endl;
-	}
-	Syntax(WordArr, n);
-
-	std::ofstream fout("out.txt");
+	wordArray("in.txt.txt", WordArr);
+	
+	std::ofstream fout("out.txt.txt");
 	fout << "Most Common word: " << mostCommonWord(WordArr, n) << std::endl;
 	fout.close();
 
