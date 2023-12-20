@@ -2,7 +2,7 @@
 #include<fstream>
 #include<string>
 #include<cstring>
-/*????? ????? ????? ????????????? ?????*/
+/*find the most common word. realise function defining palindrom*/
 
 bool isSyntax(char c)
 {
@@ -74,12 +74,29 @@ void wordArray(std::string file, std::string* WordArr)
 	fin.close();
 }
 
+bool isPalindrom(std::string str)
+{
+	for (int i = 0; i < str.length() / 2; ++i)
+	{
+		if (str[i] != str[str.size() - 1 - i])
+		{
+			return false;
+			break;
+		}
+	}
+	return true;
+}
+
 int main(int argc, char* argv[])
 {
 	int n = countWord("in.txt");;
 	std::string* WordArr = new std::string[n];
 
 	wordArray("in.txt", WordArr);
+	if (isPalindrom(WordArr[0]))
+	{
+		std::cout << "palindrom" << std::endl;
+	}
 	Syntax(WordArr, n);
 
 	std::ofstream fout("out.txt");
