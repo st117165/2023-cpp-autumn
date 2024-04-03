@@ -1,0 +1,321 @@
+#include<iostream>
+
+void freematrix(int** a, int n);
+
+struct SEdge {
+	int a;
+	int b;
+	int w;
+	SEdge(int a = 0, int b = 0, int w = 1) : a(a), b(b), w(w) {}
+	SEdge(const SEdge& src) : a(src.a), b(src.b), w(src.w) {}
+	~SEdge() {}
+	void set(int a, int b, int w)
+	{
+		this->a = a;
+		this->b = b;
+		this->w = w;
+	}
+	friend std::ostream& operator<<(std::ostream& stream, const SEdge& edge);
+};
+
+class CGraph {
+public:
+	CGraph();
+	CGraph(int vertexes, int edges);
+	~CGraph();
+	void PrintMatrix();
+	void PrintEdges();
+	void ReadMatrix(int vertexes);
+	void ReadEdges(int edges, bool haveweight = false);
+	void initEdgesFromMatrix();
+	int getEdgesCountFromMatrix();
+	int** getmatrix();
+
+private:
+	void init();
+	void initMatrix();
+	void initEdges();
+	void initMatrixFromEdges();
+	int getVertexesCountFromEdges();
+	void dispose();
+	void disposeMatrix();
+	void disposeEdges();
+	int _vertexes;
+	int _edges;
+	int** _matrix;
+	SEdge* _edge;
+};
+
+int main(int argc, char* argv[])
+{
+	CGraph graph;
+	int n;
+	std::cin >> n;
+	graph.ReadMatrix(n);
+	int** a = graph.getmatrix();
+	int sumstok = 0;
+	int sumistok = 0;
+	int* stok = (int*)malloc(n * sizeof(int));
+	int* istok = (int*)malloc(n * sizeof(int));
+	int b = 0;
+	int c = 0;
+	for (int i = 0; i < n; i++)
+	{
+		int sum2 = 0;
+		for (int j = 0; j < n; j++)
+		{
+			sum2 += a[j][i];
+		}
+		if (sum2 == 0)
+		{
+			sumistok++;
+			istok[b] = i + 1;
+			b++;
+		}
+	}
+	for (int i = 0; i < n; i++)
+	{
+		int sum1 = 0;
+		for (int j = 0; j < n; j++)
+		{
+			sum1 += a[i][j];
+		}
+		if (sum1 == 0)
+		{
+			sumstok++;
+			stok[c] = i + 1;
+			c++;
+		}
+	}
+	std::cout << sumistok << " ";
+	for (int i = 0; i < sumistok; i++)
+	{
+		std::cout << istok[i] << " ";
+	}
+	std::cout << std::endl;
+	std::cout << sumstok << " ";
+	for (int i = 0; i < sumstok; i++)
+	{
+		std::cout << stok[i] << " ";
+	}
+	std::cout << std::endl;
+
+	free(stok);
+	free(istok);
+	freematrix(a, n);
+	graph.~CGraph();
+
+	return 0;
+}
+
+
+
+CGraph::CGraph()
+	: _vertexes(0), _edges(0), _matrix(nullptr), _edge(nullptr) {}
+
+CGraph::CGraph(int vertexes, int edges)
+	: _vertexes(vertexes), _edges(edges), _matrix(nullptr), _edge(nullptr)
+{
+	init();
+}
+
+CGraph::~CGraph()
+{
+	dispose();
+}
+
+void CGraph::PrintMatrix()
+{
+	if (_matrix == nullptr)
+	{
+		if (_edge == nullptr)
+		{
+			std::cout << "Graph empty" << std::endl;
+			return;
+		}
+		initMatrixFromEdges();
+	}
+	for (int i = 0; i < _vertexes; ++i)
+	{
+		for (int j = 0; j < _vertexes; ++j)
+		{
+			std::cout << _matrix[i][j] << " ";
+		}
+		std::cout << std::endl;
+	}
+}
+
+void CGraph::PrintEdges()
+{
+	if (_edge == nullptr)
+	{
+		if (_matrix == nullptr)
+		{
+			std::cout << "Graph empty" << std::endl;
+			return;
+		}
+		initEdgesFromMatrix();
+	}
+	for (int i = 0; i < _edges; ++i)
+	{
+		std::cout << _edge[i] << std::endl;
+	}
+}
+
+void CGraph::ReadMatrix(int vertexes)
+{
+	_vertexes = vertexes;
+	initMatrix();
+	for (int i = 0; i < _vertexes; ++i)
+	{
+		for (int j = 0; j < _vertexes; ++j)
+		{
+			std::cin >> _matrix[i][j];
+		}
+	}
+}
+
+void CGraph::ReadEdges(int edges, bool haveweight)
+{
+	_edges = edges;
+	initEdges();
+	for (int i = 0; i < _edges; ++i)
+	{
+		std::cin >> _edge[i].a >> _edge[i].b;
+		if (haveweight)
+		{
+			std::cin >> _edge[i].w;
+		}
+	}
+}
+
+void CGraph::init()
+{
+	dispose();
+	initMatrix();
+	initEdges();
+}
+
+void CGraph::initMatrix()
+{
+	if (_vertexes == 0)
+	{
+		return;
+	}
+	_matrix = new int* [_vertexes];
+	for (int i = 0; i < _vertexes; ++i)
+	{
+		_matrix[i] = new int[_vertexes] { 0 };
+	}
+}
+
+void CGraph::initEdges()
+{
+	if (_edges == 0)
+	{
+		return;
+	}
+	_edge = new SEdge[_edges];
+}
+
+void CGraph::initMatrixFromEdges()
+{
+	disposeMatrix();
+	_vertexes = getVertexesCountFromEdges();
+	initMatrix();
+	for (int i = 0; i < _edges; ++i)
+	{
+		_matrix[_edge[i].a][_edge[i].b] = _edge[i].w;
+	}
+}
+
+int CGraph::getEdgesCountFromMatrix()
+{
+	int count = 0;
+	for (int i = 0; i < _vertexes; ++i)
+	{
+		for (int j = 0; j < _vertexes; ++j)
+		{
+			count += (_matrix[i][j] != 0);
+		}
+	}
+	return count;
+}
+
+void CGraph::dispose()
+{
+	disposeMatrix();
+	disposeEdges();
+}
+
+void CGraph::disposeMatrix()
+{
+	if (_matrix != nullptr)
+	{
+		for (int i = 0; i < _vertexes; ++i)
+		{
+			delete[] _matrix[i];
+		}
+		delete[] _matrix;
+		_matrix = nullptr;
+	}
+}
+
+void CGraph::disposeEdges()
+{
+	if (_edge != nullptr)
+	{
+		delete[] _edge;
+		_edge = nullptr;
+	}
+}
+
+void CGraph::initEdgesFromMatrix()
+{
+	disposeEdges();
+	_edges = getEdgesCountFromMatrix();
+	initEdges();
+	for (int i = 0, k = 0; i < _vertexes && k < _edges; ++i)
+	{
+		for (int j = 0; j < _vertexes && k < _edges; ++j)
+		{
+			if (_matrix[i][j] != 0)
+			{
+				_edge[k++].set(i + 1, j + 1, _matrix[i][j]);
+			}
+		}
+	}
+}
+
+int CGraph::getVertexesCountFromEdges()
+{
+	int res = 0;
+	for (int i = 0; i < _edges; ++i)
+	{
+		res = (res > _edge[i].a ? res : _edge[i].a);
+		res = (res > _edge[i].b ? res : _edge[i].b);
+	}
+	return res + 1;
+}
+
+std::ostream& operator<<(std::ostream& stream, const SEdge& edge)
+{
+	stream << edge.a << " " << edge.b;
+	if (edge.w > 1)
+	{
+		stream << " " << edge.w;
+	}
+	return stream;
+}
+int** CGraph::getmatrix()
+{
+	return _matrix;
+}
+void freematrix(int** a, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		free(a[i]);
+	}
+	free(a);
+}
