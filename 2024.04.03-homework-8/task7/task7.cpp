@@ -23,10 +23,8 @@ public:
 	CGraph();
 	CGraph(int vertexes, int edges);
 	~CGraph();
-	void PrintMatrix();
 	void PrintEdges();
 	void ReadMatrix(int vertexes);
-	void ReadEdges(int edges, bool haveweight = false);
 	void initEdgesFromMatrix();
 	int getEdgesCountFromMatrix();
 	int** getmatrix();
@@ -78,27 +76,6 @@ CGraph::~CGraph()
 	dispose();
 }
 
-void CGraph::PrintMatrix()
-{
-	if (_matrix == nullptr)
-	{
-		if (_edge == nullptr)
-		{
-			std::cout << "Graph empty" << std::endl;
-			return;
-		}
-		initMatrixFromEdges();
-	}
-	for (int i = 0; i < _vertexes; ++i)
-	{
-		for (int j = 0; j < _vertexes; ++j)
-		{
-			std::cout << _matrix[i][j] << " ";
-		}
-		std::cout << std::endl;
-	}
-}
-
 void CGraph::PrintEdges()
 {
 	if (_edge == nullptr)
@@ -125,20 +102,6 @@ void CGraph::ReadMatrix(int vertexes)
 		for (int j = 0; j < _vertexes; ++j)
 		{
 			std::cin >> _matrix[i][j];
-		}
-	}
-}
-
-void CGraph::ReadEdges(int edges, bool haveweight)
-{
-	_edges = edges;
-	initEdges();
-	for (int i = 0; i < _edges; ++i)
-	{
-		std::cin >> _edge[i].a >> _edge[i].b;
-		if (haveweight)
-		{
-			std::cin >> _edge[i].w;
 		}
 	}
 }
